@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_cmd_thingy.c                                  :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/13 10:49:02 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/14 16:58:41 by vkuznets         ###   ########.fr       */
+/*   Created: 2024/06/18 09:06:08 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/06/18 11:01:54 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_func(char **tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return ;
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -25,7 +27,14 @@ void	free_func(char **tab)
 	free(tab);
 }
 
-char	*get_envp(char **envp)
+void	malloc_failure(char **ar1, char **ar2)
+{
+	free_func(ar1);
+	free_func(ar2);
+	exit(1);
+}
+
+char	*get_envp(char **envp, char **cmd)
 {
 	int		i;
 
@@ -35,50 +44,73 @@ char	*get_envp(char **envp)
 		if (ft_strncmp("PATH", envp[i], 4) == 0)
 			return (&envp[i][5]);
 	}
+	free_func(cmd);
+	exit(EXIT_FAILURE);
+}
+
+int	ft_strchr(char *str, int c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
-char	*get_path(char *cmd, char **envp)
+char	*get_path(char **cmd, char **envp)
 {
 	char	**all_paths;
-	char	**s_cmd;
 	char	*path_part;
 	char	*path_to_cmd;
 	int		i;
 
 	i = -1;
-	s_cmd = ft_split(cmd, ' ');//i can have several cmds
-	all_paths = ft_split(get_envp(envp), ':');
+	if (ft_strchr(cmd[0], '/') == 1)
+	{
+		//check if we have accsess
+		if (access(cmd[0], F_OK) == -1)
+		{
+			ft_putstr_fd("pipex: command not found: ", 2);
+			ft_putendl_fd(*cmd, 2);
+			free_func(cmd);
+			exit(EXIT_FAILURE);
+		}
+		if (access(cmd[0], X_OK) == -1)
+		{
+			//permissiom denied or smth like thst
+			ft_putstr_fd("pipex: permission denied ", 2);
+			free_func(cmd);
+			exit(EXIT_FAILURE);
+		}
+		return(cmd[0]);
+	}
+	all_paths = ft_split(get_envp(envp, cmd), ':');
 	while (all_paths[++i])
 	{
 		path_part = ft_strjoin(all_paths[i], "/");
-		path_to_cmd = ft_strjoin(path_part, s_cmd[0]);
+		if (!path_part)
+			malloc_failure(cmd, all_paths);
+		path_to_cmd = ft_strjoin(path_part, cmd[0]);
 		free(path_part);
+		if (!path_to_cmd)
+			malloc_failure(cmd, all_paths);
 		if (access(path_to_cmd, F_OK | X_OK) == 0)
 		{
-			free_func(s_cmd);
+			free_func(all_paths);
 			return (path_to_cmd);
 		}
 		free(path_to_cmd);
 	}
 	free_func(all_paths);
-	free_func(s_cmd);
-	return (cmd);
+	ft_putstr_fd("pipex: command not found: ", 2);
+	ft_putendl_fd(*cmd, 2);
+	free(cmd);
+	exit(1);
 }
 
-/*int main(int ac, char **av, char **envp)
-{
-	char	*cmd;
-	int		i;
-
-	i = 0;
-	cmd = get_path(av[1], envp);
-	printf("%s\n", cmd);
-	while (cmd[i])
-	{
-		printf("%s\n", cmd[i]);
-		i++;
-	}
-	//printf("%s\n", get_envp(envp));
-
-}*/
+//line 71: we malloc at this step cmd, all_paths, path_to_cmd, BUT we use cmd and path_to_cmd AND free_path is already been free

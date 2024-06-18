@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 14:00:49 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/14 14:03:47 by vkuznets         ###   ########.fr       */
+/*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/06/18 11:01:04 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ static void	exec(char  *cmd, char **envp)
 	char 	**s_cmd;
 
 	s_cmd = ft_split(cmd, ' ');
-	path_to_cmd = get_path(s_cmd[0], envp);
-	//hz if i need it
-	if (path_to_cmd) {
+	path_to_cmd = get_path(s_cmd, envp);
+	if (path_to_cmd) 
+	{
         execve(path_to_cmd, s_cmd, envp);
         perror("execve");
         free(path_to_cmd);
         free_func(s_cmd);
         exit(EXIT_FAILURE);
-    } else {
+    } 
+	else 
+	{
         perror("Command not found");
         free_func(s_cmd);
         exit(EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/13 10:25:31 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/14 13:43:23 by vkuznets         ###   ########.fr       */
+/*   Created: 2024/06/18 09:06:35 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/06/18 10:46:21 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
 char	**ft_split(char const *s, char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*get_path(char *cmd, char **envp);
-char	*get_envp(char **envp);
+char	*get_path(char **cmd, char **envp);
+char	*get_envp(char **envp, char **cmd);
 void	free_func(char **tab);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putchar_fd(char c, int fd);
 
 #endif

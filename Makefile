@@ -11,16 +11,23 @@ SRCS = 	pipex.c \
 		get_path.c \
 		ft_split.c \
 
+OBJS = $(SRCS:.c=.o)
+
 $(NAME) :
-	gcc $(CFLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 
 
 all : $(NAME)
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 fclean : clean
-	$(RM) $(NAME)
+	$(RM) $(OBJS)
 
 clean :
 	$(RM) $(NAME)
 
 re : fclean all
+
+.PHONY: all clean fclean re

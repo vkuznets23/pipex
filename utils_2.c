@@ -3,14 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 13:42:53 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/14 13:42:57 by vkuznets         ###   ########.fr       */
+/*   Created: 2024/06/18 09:05:26 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/06/18 10:46:35 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_fd (s[i], fd);
+		i++;
+	}
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_fd (s[i], fd);
+		i++;
+	}
+	ft_putchar_fd ('\n', fd);
+}
 
 int	ft_strlen(char *str)
 {
