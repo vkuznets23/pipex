@@ -44,9 +44,10 @@ char	*get_envp(char **envp, char **cmd)
 		if (ft_strncmp("PATH", envp[i], 4) == 0)
 			return (&envp[i][5]);
 	}
-	ft_putstr_fd("pipex: No such file or directory: ", 2);
+	error_handler_func(cmd, 1);
+	/*ft_putstr_fd("pipex: No such file or directory: ", 2);
 	ft_putendl_fd(*cmd, 2);
-	free_func(cmd);
+	free_func(cmd);*/
 	exit(127);
 }
 
@@ -77,18 +78,26 @@ char	*get_path(char **cmd, char **envp)
 		//check if we have accsess
 		if (access(cmd[0], F_OK) == -1)
 		{
+			error_handler_func(cmd, 1);
+			exit(127);
+		}
+		/*{
 			ft_putstr_fd("pipex: no  such file or directory: ", 2);
 			ft_putendl_fd(*cmd, 2);
 			free_func(cmd);
 			exit(127);
-		}
+		}*/
 		if (access(cmd[0], X_OK) == -1)
 		{
+			error_handler_func(cmd, 2);
+			exit(1);
+		}
+		/*{
 			ft_putstr_fd("pipex: permission denied: ", 2);
 			ft_putendl_fd(*cmd, 2);
 			free_func(cmd);
 			exit(1);
-		}
+		}*/
 		return(cmd[0]);
 	}
 	all_paths = ft_split(get_envp(envp, cmd), ':');
@@ -109,9 +118,10 @@ char	*get_path(char **cmd, char **envp)
 		free(path_to_cmd);
 	}
 	free_func(all_paths);
-	ft_putstr_fd("pipex: command not found: ", 2);
+	error_handler_func(cmd, 3);
+	/*ft_putstr_fd("pipex: command not found: ", 2);
 	ft_putendl_fd(*cmd, 2);
-	free(cmd);
+	free(cmd);*/
 	exit(127);
 }
 

@@ -12,17 +12,29 @@
 
 #include "pipex.h"
 
-void	error_handler(char *cmd1, int error)
+void	error_options(int error)
 {
-	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(cmd1, 2);
 	if (error == 1)
 		ft_putstr_fd(": No such file or directory", 2);
 	else if (error == 2)
 		ft_putstr_fd(": Permission denied", 2);
 	else if (error == 3)
 		ft_putstr_fd(": Command not found", 2);
+}
+void	error_handler(char *cmd, int error)
+{
+	ft_putstr_fd("\n pipex: ", 2);
+	ft_putstr_fd(cmd, 2);
+	error_options(error);
 	exit(1);
+}
+
+void	error_handler_func(char **cmd, int error)
+{
+	ft_putstr_fd("\npipex: ", 2);
+	ft_putstr_fd(*cmd, 2);
+	error_options(error);
+	free_func(cmd);
 }
 
 static void	exec(char  *cmd, char **envp)

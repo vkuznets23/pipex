@@ -19,6 +19,10 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
+void	error_options(int error);
+void	error_handler(char *cmd, int error);
+void	error_handler_func(char **cmd, int error);
+
 char	**ft_split(char const *s, char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
