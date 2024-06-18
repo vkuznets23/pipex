@@ -1,0 +1,16 @@
+Makefile
+README.md
+ft_split.c
+get_path.c
+infile
+outfile
+outfile1
+outfile2
+pipex
+pipex-error-tester
+pipex.c
+pipex.h
+ppx_err_tester.sh
+ppx_tmp
+tests_commands.txt.
+utils_2.c

@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:08 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/18 11:01:54 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:53:40 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ char	*get_path(char **cmd, char **envp)
 			ft_putstr_fd("pipex: command not found: ", 2);
 			ft_putendl_fd(*cmd, 2);
 			free_func(cmd);
-			exit(EXIT_FAILURE);
+			exit(127);
 		}
 		if (access(cmd[0], X_OK) == -1)
 		{
 			//permissiom denied or smth like thst
 			ft_putstr_fd("pipex: permission denied ", 2);
 			free_func(cmd);
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 		return(cmd[0]);
 	}
@@ -110,7 +110,7 @@ char	*get_path(char **cmd, char **envp)
 	ft_putstr_fd("pipex: command not found: ", 2);
 	ft_putendl_fd(*cmd, 2);
 	free(cmd);
-	exit(1);
+	exit(127);
 }
 
 //line 71: we malloc at this step cmd, all_paths, path_to_cmd, BUT we use cmd and path_to_cmd AND free_path is already been free

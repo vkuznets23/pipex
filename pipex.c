@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/18 11:01:04 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/18 12:12:52 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,18 @@ static void	child_process(char **av, int *p_fd, char **envp) //f1, cmd1
 {
 	int fd;
 	fd = open(av[1], O_RDONLY);
+	if (access(av[1], R_OK) == -1)
+	{
+		ft_putstr_fd("pipex: Permission denied ", 2);
+		ft_putendl_fd(av[1], 2);
+		exit(1);
+	}
 	if (fd == -1)
-		perror("Reading error");
+	{
+		ft_putstr_fd("pipex: no such file or directory: ", 2);
+		ft_putendl_fd(av[1], 2);
+		exit(1);
+	}
 	dup2(fd, 0); //STDIN_FILENO
 	dup2(p_fd[1], 1);//STDOUT_FILENO
 	close(p_fd[0]); // always close the p_fd of the pipe you don't use
@@ -53,8 +63,18 @@ static void	parent_process(char **av, int *p_fd, char **envp)//f2, cmd2
 	int	fd;
 
 	fd  = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (access(av[4], W_OK) == -1)
+	{
+		ft_putstr_fd("pipex: Permission denied ", 2);
+		ft_putendl_fd(av[4], 2);
+		exit(1);
+	}
 	if (fd == -1)
-		perror("Writing error");
+	{
+		ft_putstr_fd("pipex: no such file or directory: ", 2);
+		ft_putendl_fd(av[4], 2);
+		exit(1);
+	}
 	waitpid(-1, &status, 0);//this should be somewere!!
 	dup2(fd, 1);
 	dup2(p_fd[0], 0);
@@ -67,7 +87,10 @@ int main(int ac, char **av, char **envp)
 	int		p_fd[2];
 	pid_t	pid;
 	if (ac != 5)
-		return (1);
+	{
+		ft_putstr_fd("too many argumnets ", 2);// when no bonuses at least
+		exit (1);
+	}
 	if (pipe(p_fd) == -1)
 	{
 		perror("pipe");
