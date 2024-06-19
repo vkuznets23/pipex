@@ -1,0 +1,65 @@
+Basic text processing:
+./pipex infile "grep apple" "sort" /dev/stdout
+<infile grep apple | sort> /dev/stdout
+
+Check for special characters:
+./pipex infile "grep !@#" "sort" /dev/stdout
+<infile grep !@# | sort> /dev/stdout
+
+Numeric Data Handling:
+./pipex infile "grep 123" "sort" /dev/stdout
+<infile grep 123 | sort> /dev/stdout
+
+Empty Lines Handling:
+!!!! It suppose t print an empty line !!!
+./pipex infile "grep '^$'" "sort" /dev/stdout
+<infile grep '^$' | sort> /dev/stdout
+
+Comprehensive Processing:
+./pipex infile "grep apple" "sort"  /dev/stdout
+<infile grep apple | sort> /dev/stdout
+
+Non-existent Input File:
+./pipex random_file "cat" "grep a" /dev/stdout
+<random_file cat | grep a> /dev/stdout
+
+Invalid Command:
+./pipex infile "invalid_cmd" "sort" /dev/stdout
+<infile invelid_cmd | sort> /dev/stdout
+
+No Read Permission on Input File:
+chmod -r infile
+./pipex infile "cat" "grep a" /dev/stdout
+<infile cat | grep a> /dev/stdout
+chmod +r infile 
+
+No Write Permission on Output File:
+chmod -w outfile
+./pipex infile "cat" "grep a" outfile1
+<infile cat | grep a> outfile1
+
+Empty Input File:
+./pipex empty_infile "cat" "grep a" /dev/stdout
+<empty_infile cat | grep a> /dev/stdout
+
+If the output doesn't exist:
+./pipex infile "grep nonexistentpattern" "sort" /dev/stdout
+<infile grep nonexistentpattern | sort> /dev/stdout
+
+_______
+./pipex infile "ls" "wc" /dev/stdout
+<infile ls | wc>  /dev/stdout
+
+./pipex infile "ls -l" "wc -l" /dev/stdout
+<infile ls -l | wc -l> /dev/stdout
+
+./pipex infile "grep a1" "wc -w" /dev/stdout
+<infile grep a1 | wc -w> /dev/stdout
+
+
+
+
+MEMORY LEAKS valgrind --leak-check=full ./pipex infile.txt "grep apple" "sort" output1.txt
+
+ERROR:
+echo $? ---> To check the exit code
