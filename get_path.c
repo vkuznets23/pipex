@@ -45,7 +45,7 @@ char	*get_path(char **cmd, char **envp)
 		if (access(cmd[0], X_OK) == -1)
 		{
 			error_handler_func(cmd, 2);
-			exit(1);
+			exit(126);
 		}
 		return(cmd[0]);
 	}
