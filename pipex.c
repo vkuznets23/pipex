@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/19 12:22:50 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:31:26 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ int main(int ac, char **av, char **envp)
 	pid_t	pid;
 	if (ac != 5)
 	{
-		ft_putstr_fd("Error: Bad arguments\n", 2);
-		ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 1);
+		if (ac < 5)
+			ft_putstr_fd("pipex: not enough arguments\n", 2);
+		else
+			ft_putstr_fd("pipex: too many arguments\n", 2);
 		exit (1);
 	}
 	if (pipe(p_fd) == -1)
@@ -93,7 +95,7 @@ int main(int ac, char **av, char **envp)
 		perror("fork: ");
 		exit(EXIT_FAILURE);
 	}
-	if (pid == 0) //if returns 0 we are in child process
+	if (pid == 0)
 		child_process(av, p_fd,envp);
 	parent_process(av, p_fd,envp);
 }
