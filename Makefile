@@ -9,6 +9,7 @@ RM = rm -rf
 SRCS = 	pipex.c \
 		utils_2.c \
 		get_path.c \
+		error_handlers.c \
 		ft_split.c \
 
 OBJS = $(SRCS:.c=.o)

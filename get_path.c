@@ -6,35 +6,13 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:08 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/18 16:38:25 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:35:15 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_func(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-void	malloc_failure(char **ar1, char **ar2)
-{
-	free_func(ar1);
-	free_func(ar2);
-	exit(1);
-}
-
-char	*get_envp(char **envp, char **cmd)
+static char	*get_envp(char **envp, char **cmd)
 {
 	int		i;
 
@@ -45,24 +23,7 @@ char	*get_envp(char **envp, char **cmd)
 			return (&envp[i][5]);
 	}
 	error_handler_func(cmd, 1);
-	/*ft_putstr_fd("pipex: No such file or directory: ", 2);
-	ft_putendl_fd(*cmd, 2);
-	free_func(cmd);*/
 	exit(127);
-}
-
-int	ft_strchr(char *str, int c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == (char)c)
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 char	*get_path(char **cmd, char **envp)
@@ -81,23 +42,11 @@ char	*get_path(char **cmd, char **envp)
 			error_handler_func(cmd, 1);
 			exit(127);
 		}
-		/*{
-			ft_putstr_fd("pipex: no  such file or directory: ", 2);
-			ft_putendl_fd(*cmd, 2);
-			free_func(cmd);
-			exit(127);
-		}*/
 		if (access(cmd[0], X_OK) == -1)
 		{
 			error_handler_func(cmd, 2);
 			exit(1);
 		}
-		/*{
-			ft_putstr_fd("pipex: permission denied: ", 2);
-			ft_putendl_fd(*cmd, 2);
-			free_func(cmd);
-			exit(1);
-		}*/
 		return(cmd[0]);
 	}
 	all_paths = ft_split(get_envp(envp, cmd), ':');
@@ -119,9 +68,6 @@ char	*get_path(char **cmd, char **envp)
 	}
 	free_func(all_paths);
 	error_handler_func(cmd, 3);
-	/*ft_putstr_fd("pipex: command not found: ", 2);
-	ft_putendl_fd(*cmd, 2);
-	free(cmd);*/
 	exit(127);
 }
 

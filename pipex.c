@@ -6,36 +6,11 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/18 16:37:13 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:18:42 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	error_options(int error)
-{
-	if (error == 1)
-		ft_putstr_fd(": No such file or directory", 2);
-	else if (error == 2)
-		ft_putstr_fd(": Permission denied", 2);
-	else if (error == 3)
-		ft_putstr_fd(": Command not found", 2);
-}
-void	error_handler(char *cmd, int error)
-{
-	ft_putstr_fd("\n pipex: ", 2);
-	ft_putstr_fd(cmd, 2);
-	error_options(error);
-	exit(1);
-}
-
-void	error_handler_func(char **cmd, int error)
-{
-	ft_putstr_fd("\npipex: ", 2);
-	ft_putstr_fd(*cmd, 2);
-	error_options(error);
-	free_func(cmd);
-}
 
 static void	exec(char  *cmd, char **envp)
 {
@@ -46,7 +21,13 @@ static void	exec(char  *cmd, char **envp)
 	if (!s_cmd)
 		exit(1);
 	if(!*s_cmd)
-		error_handler(cmd, 3); 
+	{
+		ft_putstr_fd("pipex: ", 2);
+		error_options(3);
+		ft_putstr_fd(*s_cmd, 2);
+		ft_putstr_fd("\n", 2);
+		exit(127);
+	}
 	path_to_cmd = get_path(s_cmd, envp);
 	if (path_to_cmd) 
 	{
