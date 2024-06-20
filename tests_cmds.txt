@@ -59,7 +59,17 @@ _______
 
 
 
-MEMORY LEAKS valgrind --leak-check=full ./pipex infile.txt "grep apple" "sort" output1.txt
-
-ERROR:
+MEMORY LEAKS valgrind --leak-check=full ./pipex infile.txt "grep apple" "sort" output1.txtROR:
 echo $? ---> To check the exit code
+
+_______
+
+
+./pipex infile "" "     " outfile1
+< infile '' | '     ' > outfile2
+it suppose to be: zsh: permission denied: 
+zsh: command not found: and exit code is 127
+i have it as command not found both
+
+
+

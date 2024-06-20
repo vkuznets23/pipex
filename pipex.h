@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:35 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/19 10:40:48 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:50:31 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 //error_handler.c
 void	error_options(int error);
-void	error_handler(char *cmd, int error);
-void	error_handler_func(char **cmd, int error);
+void	error_handler(char *cmd, int error, int error_status);
+void	error_handler_func(char **cmd, int error, int error_status);
 void	malloc_failure(char **ar1, char **ar2);
 void	free_func(char **tab);
 

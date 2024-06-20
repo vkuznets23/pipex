@@ -6,45 +6,11 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:05:26 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/19 10:37:48 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:38:48 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		ft_putchar_fd (s[i], fd);
-		i++;
-	}
-}
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		ft_putchar_fd (s[i], fd);
-		i++;
-	}
-	ft_putchar_fd ('\n', fd);
-}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

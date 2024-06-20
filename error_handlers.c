@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:29:05 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/19 11:00:40 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:54:01 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,24 @@ void	error_options(int error)
 	else if (error == 3)
 		ft_putstr_fd("command not found: ", 2);
 }
-void	error_handler(char *cmd, int error)
+
+void	error_handler(char *cmd, int error, int exit_status)
 {
 	ft_putstr_fd("pipex: ", 2);
 	error_options(error);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd("\n", 2);
-	exit(1);
+	exit(exit_status);
 }
 
-void	error_handler_func(char **cmd, int error)
+void	error_handler_func(char **cmd, int error, int exit_status)
 {
 	ft_putstr_fd("pipex: ", 2);
 	error_options(error);
 	ft_putstr_fd(*cmd, 2);
 	ft_putstr_fd("\n", 2);
 	free_func(cmd);
+	exit(exit_status);
 }
 
 void	malloc_failure(char **ar1, char **ar2)
