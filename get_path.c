@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:08 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 11:35:34 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:25:43 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ char	*get_path(char **cmd, char **envp)
 	return (0);
 }
 
-//line 71: we malloc at this step cmd, all_paths, path_to_cmd, 
+//line 71: we malloc at this step cmd, all_paths, path_to_cmd,
 //BUT we use cmd and path_to_cmd AND free_path is already been free

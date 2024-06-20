@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 10:49:50 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:22:18 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,10 @@ static void	exec(char *cmd, char **envp)
 	if (!s_cmd)
 		exit(1);
 	if (!*s_cmd)
-	{
-		ft_putstr_fd("pipex: ", 2);
-		error_options(3);
-		ft_putstr_fd(*s_cmd, 2);
-		ft_putstr_fd("\n", 2);
-		exit(127);
-	}
+		error_handler(*s_cmd, 2, 127);
 	path_to_cmd = get_path(s_cmd, envp);
 	if (execve(path_to_cmd, s_cmd, envp) == -1)
-	{
-		ft_putstr_fd("pipex:command not found: ", 2);
-		ft_putendl_fd(s_cmd[0], 2);
-		free_func(s_cmd);
-		exit(0);
-	}
+		error_handler_func(s_cmd, 3, 0);
 }
 
 static void	child_process(char **av, int *p_fd, char **envp)
