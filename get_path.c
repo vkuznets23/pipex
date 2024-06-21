@@ -12,7 +12,47 @@
 
 #include "pipex.h"
 
-static char	*get_envp(char **envp, char **cmd)
+static char	*access_rights(char **cmd)
+{
+	if (access(cmd[0], F_OK) == -1)
+		error_handler_func(cmd, 1, 127);
+	if (access(cmd[0], X_OK) == -1)
+		error_handler_func(cmd, 2, 126);
+	return (cmd[0]);
+}
+
+char	*get_path(char **cmd, char **envp)
+{
+	char	**paths;
+	char	*path;
+	int		i;
+	char	*part_path;
+
+	i = 0;
+	if (ft_strchr(cmd[0], '/') == 1)
+		access_rights(cmd);
+	while (ft_strncmp(envp[i], "PATH", 4) != 0)
+		i++;
+	paths = ft_split(envp[i] + 5, ':');
+	i = 0;
+	while (paths[i])
+	{
+		part_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(part_path, *cmd);
+		free(part_path);
+		if (access(path, F_OK) == 0)
+			return (path);
+		free(path);
+		i++;
+	}
+	i = -1;
+	while (paths[++i])
+		free(paths[i]);
+	free(paths);
+	return (0);
+}
+
+/*static char	*get_envp(char **envp, char **cmd)
 {
 	int		i;
 
@@ -24,15 +64,6 @@ static char	*get_envp(char **envp, char **cmd)
 	}
 	error_handler_func(cmd, 1, 127);
 	return (0);
-}
-
-static char	*access_rights(char **cmd)
-{
-	if (access(cmd[0], F_OK) == -1)
-		error_handler_func(cmd, 1, 127);
-	if (access(cmd[0], X_OK) == -1)
-		error_handler_func(cmd, 2, 126);
-	return (cmd[0]);
 }
 
 char	*get_path(char **cmd, char **envp)
@@ -65,7 +96,4 @@ char	*get_path(char **cmd, char **envp)
 	free_func(all_paths);
 	error_handler_func(cmd, 3, 127);
 	return (0);
-}
-
-//line 71: we malloc at this step cmd, all_paths, path_to_cmd,
-//BUT we use cmd and path_to_cmd AND free_path is already been free
+}*/
