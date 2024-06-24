@@ -6,11 +6,11 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:29:05 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 10:54:01 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:00:38 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 void	error_options(int error)
 {

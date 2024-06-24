@@ -6,11 +6,11 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:08 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 13:25:43 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:01:12 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 static char	*access_rights(char **cmd)
 {

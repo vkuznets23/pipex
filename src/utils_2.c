@@ -6,11 +6,11 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:05:26 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 10:38:48 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:01:34 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

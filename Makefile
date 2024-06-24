@@ -1,19 +1,16 @@
 NAME = pipex
-
-CC = gcc
-
+CC = cc
 CFLAGS = -Werror -Wall -Wextra
-
 RM = rm -rf
-
+SRCS_PATH = src
 SRCS = 	pipex.c \
-	utils_1.c\
-	utils_2.c \
-	get_path.c \
-	error_handlers.c \
-	ft_split.c 
+	$(SRCS_PATH)/utils_1.c\
+	$(SRCS_PATH)/utils_2.c \
+	$(SRCS_PATH)/get_path.c \
+	$(SRCS_PATH)/error_handlers.c \
+	$(SRCS_PATH)/ft_split.c 
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:%.c=%.o)
 
 
 #Rule to build the final executable
@@ -34,4 +31,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: all clean fclean rea
+.PHONY: all clean fclean re

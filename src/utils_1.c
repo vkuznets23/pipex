@@ -6,11 +6,11 @@
 /*   By: vkuznets <vkuznets@studen.hive.fi>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:37:03 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 10:38:19 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:01:24 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

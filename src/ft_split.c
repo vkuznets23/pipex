@@ -6,11 +6,11 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:05:55 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/18 09:05:59 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:00:54 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 static int	count_words(char const *s, char c)
 {
