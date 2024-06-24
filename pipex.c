@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 13:22:18 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:29:13 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ static void	child_process(char **av, int *p_fd, char **envp)
 		error_handler(av[1], 2, 1);
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
-	close(p_fd[0]);
+	close(p_fd[0]);//we dont use it
+	close(p_fd[1]);//we don´t need it anymore
+	close(fd);
 	exec(av[2], envp);
 }
 
-static void	parent_process(char **av, int *p_fd, char **envp)
+static void	second_child(char **av, int *p_fd, char **envp)
 {
-	int	status;
 	int	fd;
 
 	fd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -54,11 +55,32 @@ static void	parent_process(char **av, int *p_fd, char **envp)
 		error_handler(av[4], 2, 1);
 	if (fd == -1)
 		error_handler(av[4], 1, 1);
-	waitpid(-1, &status, 0);
 	dup2(fd, 1);
 	dup2(p_fd[0], 0);
 	close(p_fd[1]);
+	close(fd);
+	close(p_fd[0]);
 	exec(av[3], envp);
+}
+
+static void	ft_second_fork(char **av, char **envp, int *p_fd)
+{
+	pid_t pid;
+	int error;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork: ");
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
+		second_child(av, p_fd, envp);
+	//maybe close something??
+	waitpid(pid, &error, 0);
+	close(p_fd[0]);
+	error = (error & 0xff00) >> 8;
+	exit(error);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -87,5 +109,6 @@ int	main(int ac, char **av, char **envp)
 	}
 	if (pid == 0)
 		child_process(av, p_fd, envp);
-	parent_process(av, p_fd, envp);
+	close(p_fd[1]);//we read from the pipe
+	ft_second_fork(av, envp, p_fd);//o execut the 2nd cmd
 }
