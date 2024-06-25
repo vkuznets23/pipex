@@ -12,9 +12,9 @@
 
 #include "pipex.h"
 
-struct t_pipex data
+void	initilize_data(char **av, char **envp, int ac, t_pipex *data)
 {
-	char	**av;
-	char	**envp;
-	int	ac;
-
+	data->av = av;
+	data->envp = envp;
+	data->ac = ac;
+}

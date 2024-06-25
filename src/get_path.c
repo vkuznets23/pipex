@@ -21,7 +21,7 @@ static char	*access_rights(char **cmd)
 	return (cmd[0]);
 }
 
-char	*get_path(char **cmd, char **envp)
+/*char	*get_path(char **cmd, char **envp)
 {
 	char	**paths;
 	char	*path;
@@ -33,26 +33,24 @@ char	*get_path(char **cmd, char **envp)
 		access_rights(cmd);
 	while (ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (paths[i])
+	paths = ft_split(envp[i] + 5, ':');//malloc
+	i = -1;
+	while (paths[++i])
 	{
-		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, *cmd);
+		part_path = ft_strjoin(paths[i], "/");//malloc
+		path = ft_strjoin(part_path, *cmd);//malloc
 		free(part_path);
 		if (access(path, F_OK) == 0)
 			return (path);
-		free(path);
-		i++;
+		malloc_failure(part_path, cmd)
+		//free(path);
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_func(paths);
+	error_handler_func(cmd, 3, 127);
 	return (0);
-}
+}*/
 
-/*static char	*get_envp(char **envp, char **cmd)
+static char	*get_envp(char **envp, char **cmd)
 {
 	int		i;
 
@@ -66,17 +64,13 @@ char	*get_path(char **cmd, char **envp)
 	return (0);
 }
 
-char	*get_path(char **cmd, char **envp)
+static char	*find_the_path(char **all_paths, char **cmd)
 {
-	char	**all_paths;
 	char	*path_part;
 	char	*path_to_cmd;
 	int		i;
 
 	i = -1;
-	if (ft_strchr(cmd[0], '/') == 1)
-		access_rights(cmd);
-	all_paths = ft_split(get_envp(envp, cmd), ':');
 	while (all_paths[++i])
 	{
 		path_part = ft_strjoin(all_paths[i], "/");
@@ -93,7 +87,26 @@ char	*get_path(char **cmd, char **envp)
 		}
 		free(path_to_cmd);
 	}
+	return (0);
+}
+
+char	*get_path(char **cmd, char **envp)
+{
+	char	**all_paths;
+	char	*path_to_cmd;
+	
+	if (ft_strchr(cmd[0], '/') == 1)
+	{
+		access_rights(cmd);
+		return (cmd[0]);
+	}
+	all_paths = ft_split(get_envp(envp, cmd), ':');
+	if (!all_paths)
+		malloc_failure(cmd, NULL);
+	path_to_cmd = find_the_path(all_paths, cmd);
+	if (path_to_cmd)
+		return (path_to_cmd);
 	free_func(all_paths);
 	error_handler_func(cmd, 3, 127);
 	return (0);
-}*/
+}

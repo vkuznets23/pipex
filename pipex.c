@@ -27,43 +27,43 @@ static void	exec(char *cmd, char **envp)
 		error_handler_func(s_cmd, 3, 0);
 }
 
-static void	child_process(char **av, int *p_fd, char **envp)
+static void	child_process(int *p_fd, t_pipex *data)
 {
 	int	fd;
 
-	if (access(av[1], F_OK) == -1)
-		error_handler(av[1], 1, 1);
-	if (access(av[1], R_OK) == -1)
-		error_handler(av[1], 2, 1);
-	fd = open(av[1], O_RDONLY);
+	if (access(data->av[1], F_OK) == -1)
+		error_handler(data->av[1], 1, 1);
+	if (access(data->av[1], R_OK) == -1)
+		error_handler(data->av[1], 2, 1);
+	fd = open(data->av[1], O_RDONLY);
 	if (fd == -1)
-		error_handler(av[1], 2, 1);
+		error_handler(data->av[1], 2, 1);
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
 	close(p_fd[0]);//we dont use it
 	close(p_fd[1]);//we don´t need it anymore
 	close(fd);
-	exec(av[2], envp);
+	exec(data->av[2], data->envp);
 }
 
-static void	second_child(char **av, int *p_fd, char **envp)
+static void	second_child(int *p_fd, t_pipex *data)
 {
 	int	fd;
 
-	fd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (access(av[4], W_OK) == -1)
-		error_handler(av[4], 2, 1);
+	fd = open(data->av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (access(data->av[4], W_OK) == -1)
+		error_handler(data->av[4], 2, 1);
 	if (fd == -1)
-		error_handler(av[4], 1, 1);
+		error_handler(data->av[4], 1, 1);
 	dup2(fd, 1);
 	dup2(p_fd[0], 0);
 	close(p_fd[1]);
 	close(fd);
 	close(p_fd[0]);
-	exec(av[3], envp);
+	exec(data->av[3], data->envp);
 }
 
-static void	ft_second_fork(char **av, char **envp, int *p_fd)
+static void	ft_second_fork(t_pipex *data, int *p_fd)
 {
 	pid_t pid;
 	int error;
@@ -75,8 +75,7 @@ static void	ft_second_fork(char **av, char **envp, int *p_fd)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		second_child(av, p_fd, envp);
-	//maybe close something??
+		second_child(p_fd, data);
 	waitpid(pid, &error, 0);
 	close(p_fd[0]);
 	error = (error & 0xff00) >> 8;
@@ -87,15 +86,14 @@ int	main(int ac, char **av, char **envp)
 {
 	int	p_fd[2];
 	pid_t	pid;
+	t_pipex data;
 
 	if (ac != 5)
 	{
-		if (ac < 5)
-			ft_putstr_fd("pipex: not enough arguments\n", 2);
-		else
-			ft_putstr_fd("pipex: too many arguments\n", 2);
+		ft_putstr_fd("pipex: arguments error\n", 2);
 		exit (1);
 	}
+	initilize_data(av, envp, ac, &data);
 	if (pipe(p_fd) == -1)
 	{
 		perror("pipe");
@@ -108,7 +106,7 @@ int	main(int ac, char **av, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		child_process(av, p_fd, envp);
+		child_process(p_fd, &data);
 	close(p_fd[1]);//we read from the pipe
-	ft_second_fork(av, envp, p_fd);//o execut the 2nd cmd
+	ft_second_fork(&data, p_fd);//o execut the 2nd cmd
 }

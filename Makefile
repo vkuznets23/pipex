@@ -1,16 +1,19 @@
 NAME = pipex
+
 CC = cc
 CFLAGS = -Werror -Wall -Wextra
 RM = rm -rf
 SRCS_PATH = src
+
 SRCS = 	pipex.c \
+	struct.c \
 	$(SRCS_PATH)/utils_1.c\
 	$(SRCS_PATH)/utils_2.c \
 	$(SRCS_PATH)/get_path.c \
 	$(SRCS_PATH)/error_handlers.c \
 	$(SRCS_PATH)/ft_split.c 
 
-OBJS = $(SRCS:%.c=%.o)
+OBJS = $(SRCS:.c=.o)
 
 
 #Rule to build the final executable

@@ -19,6 +19,15 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
+//struct
+typedef struct s_pipex
+{
+	char	**av;
+	char	**envp;
+	int	ac;
+}	t_pipex;
+void	initilize_data(char **av, char **envp, int ac, t_pipex *data);
+
 //error_handler.c
 void	error_options(int error);
 void	error_handler(char *cmd, int error, int error_status);
