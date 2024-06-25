@@ -20,6 +20,8 @@ void	error_options(int error)
 		ft_putstr_fd("permission denied: ", 2);
 	else if (error == 3)
 		ft_putstr_fd("command not found: ", 2);
+	else if (error == 4)
+		ft_putstr_fd("arguments error", 2);
 }
 
 void	error_handler(char *cmd, int error, int exit_status)

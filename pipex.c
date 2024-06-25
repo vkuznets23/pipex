@@ -27,6 +27,25 @@ static void	exec(char *cmd, char **envp)
 		error_handler_func(s_cmd, 3, 0);
 }
 
+static void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to, int p_fd)
+{
+	dup2(fd_from, fd_to);
+	dup2(p_fd_from, p_fd_to);
+	close(p_fd);
+	close(p_fd_from);
+	close(fd_from);
+	/*dup2(fd, 0);
+	dup2(p_fd[1], 1);
+	close(p_fd[0]);//we dont use it
+	close(p_fd[1]);//we don´t need it anymore
+	close(fd);*/
+	/*dup2(fd, 1);
+	dup2(p_fd[0], 0);
+	close(p_fd[1]);
+	close(fd);
+	close(p_fd[0]);*/
+}
+
 static void	child_process(int *p_fd, t_pipex *data)
 {
 	int	fd;
@@ -38,11 +57,7 @@ static void	child_process(int *p_fd, t_pipex *data)
 	fd = open(data->av[1], O_RDONLY);
 	if (fd == -1)
 		error_handler(data->av[1], 2, 1);
-	dup2(fd, 0);
-	dup2(p_fd[1], 1);
-	close(p_fd[0]);//we dont use it
-	close(p_fd[1]);//we don´t need it anymore
-	close(fd);
+	my_dup2(fd, 0, p_fd[1], 1, p_fd[0]);
 	exec(data->av[2], data->envp);
 }
 
@@ -55,11 +70,7 @@ static void	second_child(int *p_fd, t_pipex *data)
 		error_handler(data->av[4], 2, 1);
 	if (fd == -1)
 		error_handler(data->av[4], 1, 1);
-	dup2(fd, 1);
-	dup2(p_fd[0], 0);
-	close(p_fd[1]);
-	close(fd);
-	close(p_fd[0]);
+	my_dup2(fd, 1, p_fd[0], 0, p_fd[1]);
 	exec(data->av[3], data->envp);
 }
 
@@ -72,7 +83,7 @@ static void	ft_second_fork(t_pipex *data, int *p_fd)
 	if (pid < 0)
 	{
 		perror("fork: ");
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	if (pid == 0)
 		second_child(p_fd, data);
@@ -90,20 +101,20 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 5)
 	{
-		ft_putstr_fd("pipex: arguments error\n", 2);
+		error_options(4);
 		exit (1);
 	}
 	initilize_data(av, envp, ac, &data);
 	if (pipe(p_fd) == -1)
 	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
+		perror("pipe: ");
+		exit(1)
 	}
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork: ");
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	if (pid == 0)
 		child_process(p_fd, &data);
