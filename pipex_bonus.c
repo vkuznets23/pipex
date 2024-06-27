@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 14:41:51 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:08:59 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	child_process(int *p_fd, t_pipex *data)
 
 static void	middle_child(int *old_fd, t_pipex *data, int cmd_num)
 {
-	int	new_fd[2];
 	pid_t	pid;
+	int	new_fd[2];
 
 	if (pipe(new_fd) == -1)
 		error_handler(NULL, 5, 1);

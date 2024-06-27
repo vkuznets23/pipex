@@ -6,7 +6,7 @@
 /*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:13 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 15:10:48 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:15:59 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,25 @@ void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to)
 	close(fd_from);
 }
 
-/*static int	space_checker(char *cmd)
+static void	space_checker(char *cmd)
 {
-	int	i;
+	int len;
 
-	i = 0;
-	if (cmd[i] == '\0')
-		return (0);
-	while (cmd)
-	{
-		if (cmd[i] != ' ' || cmd[i] != '\t' || cmd[i] != '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}*/
+	len = ft_strlen(cmd);
+	if (cmd[0] == '\0')
+		error_handler(cmd, 2, 127);
+	if (cmd[0] == ' ' || (cmd[0] >= 9 && cmd[0] <= 13))
+		error_handler(cmd, 3, 127);
+	if (cmd[len -1] == ' ' || (cmd[len - 1] >= 9 && cmd[len - 1] <= 13))
+		error_handler(cmd, 3, 127);
+}
 
 void	exec(char *cmd, char **envp)
 {
 	char	*path_to_cmd;
 	char	**s_cmd;
 
-	/*if (space_checker(cmd))
-		error_handler(cmd, 3, 127);*/
+	space_checker(cmd);
 	s_cmd = ft_split(cmd, ' ');
 	if (!s_cmd)
 		exit(1);
