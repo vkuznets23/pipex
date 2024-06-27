@@ -1,39 +1,68 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/27 09:44:34 by vkuznets          #+#    #+#              #
+#    Updated: 2024/06/27 10:36:49 by vkuznets         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = pipex
 
 CC = cc
 CFLAGS = -Werror -Wall -Wextra
-RM = rm -rf
 SRCS_PATH = src
+B_SRCS_PATH = src_bonus
 
-#$(SRCS)/pipex.c \#
-SRCS = 	pipex_bonus.c \
-	$(SRCS_PATH)/last_child.c \
-	$(SRCS_PATH)/struct.c \
-	$(SRCS_PATH)/utils_1.c\
-	$(SRCS_PATH)/utils_2.c \
+SRCS = 	pipex.c \
+	$(SRCS_PATH)/exec_utils.c \
+	$(SRCS_PATH)/printing_utils.c\
+	$(SRCS_PATH)/libft_utils.c \
+	$(SRCS_PATH)/get_path.c \
+	$(SRCS_PATH)/error_handlers.c \
+	$(SRCS_PATH)/ft_split.c 
+
+B_SRCS = pipex_bonus.c \
+	$(B_SRCS_PATH)/last_child.c \
+	$(SRCS_PATH)/exec_utils.c \
+	$(SRCS_PATH)/printing_utils.c\
+	$(SRCS_PATH)/libft_utils.c \
 	$(SRCS_PATH)/get_path.c \
 	$(SRCS_PATH)/error_handlers.c \
 	$(SRCS_PATH)/ft_split.c 
 
 OBJS = $(SRCS:.c=.o)
+B_OBJS = $(B_SRCS:.c=.o)
 
+all : mandatory
 
-#Rule to build the final executable
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+mandatory : .mandatory
+
+.mandatory : $(OBJS)
+	$(CC) -o $(NAME) $(CFLAGS) $(OBJS)
+	@touch .mandatory
+	@rm -f .bonus
+
+bonus : .bonus
+
+.bonus : $(B_OBJS)
+	$(CC) -o $(NAME) $(CFLAGS) $(B_OBJS)
+	@touch .bonus
+	@rm -f .mandatory
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-#Phony targets
-all : $(NAME)
+clean:
+	rm -f $(OBJS) $(B_OBJS)
+	@rm -f .bonus .mandatory
 
-clean :
-	$(RM) $(OBJS)
+fclean: clean
+	rm -rf $(NAME)
 
-fclean : clean
-	$(RM) $(NAME)
-
-re : fclean all
+re: fclean all
 
 .PHONY: all clean fclean re

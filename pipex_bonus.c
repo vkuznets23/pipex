@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/24 14:29:13 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:05:29 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	middle_child(int *old_fd, t_pipex *data, int cmd_num)
 		close(new_fd[0]);
 		dup2(old_fd[0], 0);
 		dup2(new_fd[1], 1);
-		//mb close smth else
 		exec(data->av[cmd_num], data->envp);
 	}
 	close(new_fd[1]);
