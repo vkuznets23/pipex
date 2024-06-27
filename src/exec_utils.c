@@ -6,7 +6,7 @@
 /*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:13 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 15:05:19 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:10:48 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to)
 	close(fd_from);
 }
 
-static int	space_checker(char *cmd)
+/*static int	space_checker(char *cmd)
 {
 	int	i;
 
@@ -51,15 +51,15 @@ static int	space_checker(char *cmd)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 void	exec(char *cmd, char **envp)
 {
 	char	*path_to_cmd;
 	char	**s_cmd;
 
-	if (space_checker(cmd))
-		error_handler(cmd, 3, 127);
+	/*if (space_checker(cmd))
+		error_handler(cmd, 3, 127);*/
 	s_cmd = ft_split(cmd, ' ');
 	if (!s_cmd)
 		exit(1);
