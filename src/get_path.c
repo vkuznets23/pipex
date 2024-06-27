@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:08 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/24 15:01:12 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:41:07 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,6 @@ static char	*access_rights(char **cmd)
 		error_handler_func(cmd, 2, 126);
 	return (cmd[0]);
 }
-
-/*char	*get_path(char **cmd, char **envp)
-{
-	char	**paths;
-	char	*path;
-	int		i;
-	char	*part_path;
-
-	i = 0;
-	if (ft_strchr(cmd[0], '/') == 1)
-		access_rights(cmd);
-	while (ft_strncmp(envp[i], "PATH", 4) != 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');//malloc
-	i = -1;
-	while (paths[++i])
-	{
-		part_path = ft_strjoin(paths[i], "/");//malloc
-		path = ft_strjoin(part_path, *cmd);//malloc
-		free(part_path);
-		if (access(path, F_OK) == 0)
-			return (path);
-		malloc_failure(part_path, cmd)
-		//free(path);
-	}
-	free_func(paths);
-	error_handler_func(cmd, 3, 127);
-	return (0);
-}*/
 
 static char	*get_envp(char **envp, char **cmd)
 {
@@ -94,7 +65,7 @@ char	*get_path(char **cmd, char **envp)
 {
 	char	**all_paths;
 	char	*path_to_cmd;
-	
+
 	if (ft_strchr(cmd[0], '/') == 1)
 	{
 		access_rights(cmd);
@@ -110,3 +81,6 @@ char	*get_path(char **cmd, char **envp)
 	error_handler_func(cmd, 3, 127);
 	return (0);
 }
+
+//F_OK - existance of the file or directory
+//X_OK - execute permission

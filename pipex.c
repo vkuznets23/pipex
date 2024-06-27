@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 10:34:34 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:02:57 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	child_process(int *p_fd, t_pipex *data)
 	fd = open(data->av[1], O_RDONLY);
 	if (fd == -1)
 		error_handler(data->av[1], 2, 1);
-	my_dup2(fd, 0, p_fd[1], 1, p_fd[0]);
+	my_dup2(fd, 0, p_fd[1], 1);
+	close(p_fd[0]);
 	exec(data->av[2], data->envp);
 }
 
@@ -43,7 +44,8 @@ static void	ft_second_fork(t_pipex *data, int *p_fd)
 			error_handler(data->av[4], 2, 1);
 		if (fd == -1)
 			error_handler(data->av[4], 1, 1);
-		my_dup2(fd, 1, p_fd[0], 0, p_fd[1]);
+		my_dup2(fd, 1, p_fd[0], 0);
+		close(p_fd[1]);
 		exec(data->av[3], data->envp);
 	}
 	waitpid(pid, &error, 0);
@@ -54,9 +56,9 @@ static void	ft_second_fork(t_pipex *data, int *p_fd)
 
 int	main(int ac, char **av, char **envp)
 {
-	int	p_fd[2];
+	t_pipex	data;
 	pid_t	pid;
-	t_pipex data;
+	int	p_fd[2];
 
 	if (ac != 5)
 		error_handler(NULL, 4, 1);
@@ -68,6 +70,6 @@ int	main(int ac, char **av, char **envp)
 		error_handler(NULL, 6, 1);
 	if (pid == 0)
 		child_process(p_fd, &data);
-	close(p_fd[1]);//we read from the pipe
-	ft_second_fork(&data, p_fd);//o execut the 2nd cmd
+	close(p_fd[1]);
+	ft_second_fork(&data, p_fd);
 }

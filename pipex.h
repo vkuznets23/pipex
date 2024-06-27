@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:35 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/20 10:50:31 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:59:23 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 //struct
 typedef struct s_pipex
 {
+	int	ac;
 	char	**av;
 	char	**envp;
-	int	ac;
 }	t_pipex;
 void	initilize_data(char **av, char **envp, int ac, t_pipex *data);
-void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to, int p_fd);
+void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to);
 void	exec(char *cmd, char **envp);
 
 //last_child

@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/24 14:29:13 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:45:24 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	last_child(int *p_fd, t_pipex *data)
 		error_handler(data->av[data->ac - 1], 2, 1);
 	if (fd == -1)
 		error_handler(data->av[data->ac - 1], 1, 1);
-	my_dup2(fd, 1, p_fd[0], 0, p_fd[1]);
+	my_dup2(fd, 1, p_fd[0], 0);
+	close(p_fd[1]);
 	exec(data->av[data->ac - 2], data->envp);
 }
 
