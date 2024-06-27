@@ -27,6 +27,12 @@ typedef struct s_pipex
 	int	ac;
 }	t_pipex;
 void	initilize_data(char **av, char **envp, int ac, t_pipex *data);
+void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to, int p_fd);
+void	exec(char *cmd, char **envp);
+
+//last_child
+void	last_child(int *p_fd, t_pipex *data);
+void	last_child_fork(t_pipex *data, int *p_fd);
 
 //error_handler.c
 void	error_options(int error);

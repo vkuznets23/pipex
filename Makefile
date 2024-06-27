@@ -5,8 +5,10 @@ CFLAGS = -Werror -Wall -Wextra
 RM = rm -rf
 SRCS_PATH = src
 
-SRCS = 	pipex.c \
-	struct.c \
+#$(SRCS)/pipex.c \#
+SRCS = 	pipex_bonus.c \
+	$(SRCS_PATH)/last_child.c \
+	$(SRCS_PATH)/struct.c \
 	$(SRCS_PATH)/utils_1.c\
 	$(SRCS_PATH)/utils_2.c \
 	$(SRCS_PATH)/get_path.c \

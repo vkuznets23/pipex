@@ -22,6 +22,10 @@ void	error_options(int error)
 		ft_putstr_fd("command not found: ", 2);
 	else if (error == 4)
 		ft_putstr_fd("arguments error", 2);
+	else if (error == 5)
+		ft_putstr_fd("pipe failure", 2);
+	else if (error == 6)
+		ft_putstr_fd("fork failure", 2);
 }
 
 void	error_handler(char *cmd, int error, int exit_status)
