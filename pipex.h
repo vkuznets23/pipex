@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:35 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/28 10:13:08 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/28 13:37:46 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_strchr(char *str, int c);
-int		ft_strlen(char *str);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strchr(char *str, int c);
+int	ft_strlen(char *str);
+
+//get_next_line
+char	*get_next_line(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:38 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 10:10:40 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:12:48 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,25 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-int	ft_strchr(char *str, int c)
+char	*ft_strchr(char *str, int c)
+{
+	int	i;
+
+	i = 0;
+	if(!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
+		i++;
+	}
+	if ((char)c == '\0')
+		return ((char *)&str[i]);
+	return (0);
+}
+
+/*int	ft_strchr(char *str, int c)
 {
 	int	i;
 
@@ -66,7 +84,7 @@ int	ft_strchr(char *str, int c)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 int	ft_strlen(char *str)
 {
