@@ -6,11 +6,11 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 16:08:59 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:15:02 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 static void	child_process(int *p_fd, t_pipex *data)
 {
@@ -31,7 +31,7 @@ static void	child_process(int *p_fd, t_pipex *data)
 static void	middle_child(int *old_fd, t_pipex *data, int cmd_num)
 {
 	pid_t	pid;
-	int	new_fd[2];
+	int		new_fd[2];
 
 	if (pipe(new_fd) == -1)
 		error_handler(NULL, 5, 1);
@@ -55,9 +55,9 @@ static void	middle_child(int *old_fd, t_pipex *data, int cmd_num)
 
 int	main(int ac, char **av, char **envp)
 {
-	int	p_fd[2];
 	pid_t	pid;
-	t_pipex data;
+	t_pipex	data;
+	int		p_fd[2];
 
 	if (ac < 5)
 		error_handler(NULL, 4, 1);

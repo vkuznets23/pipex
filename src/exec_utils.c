@@ -6,7 +6,7 @@
 /*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:13 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 16:15:59 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:09:53 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to)
 
 static void	space_checker(char *cmd)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(cmd);
 	if (cmd[0] == '\0')

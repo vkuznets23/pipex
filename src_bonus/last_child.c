@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 14:42:12 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:13:40 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	last_child(int *p_fd, t_pipex *data)
 void	last_child_fork(t_pipex *data, int *p_fd)
 {
 	pid_t	pid;
-	int	error;
+	int		error;
 
 	pid = fork();
 	if (pid < 0)

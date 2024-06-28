@@ -6,7 +6,7 @@
 #    By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/27 09:44:34 by vkuznets          #+#    #+#              #
-#    Updated: 2024/06/27 10:36:49 by vkuznets         ###   ########.fr        #
+#    Updated: 2024/06/28 09:46:22 by vkuznets         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS = 	pipex.c \
 	$(SRCS_PATH)/error_handlers.c \
 	$(SRCS_PATH)/ft_split.c 
 
-B_SRCS = pipex_bonus.c \
+B_SRCS = $(B_SRCS_PATH)/pipex_bonus.c \
 	$(B_SRCS_PATH)/last_child.c \
 	$(SRCS_PATH)/exec_utils.c \
 	$(SRCS_PATH)/printing_utils.c\

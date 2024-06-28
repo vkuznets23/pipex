@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 14:40:14 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:11:57 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static void	child_process(int *p_fd, t_pipex *data)
 static void	ft_second_fork(t_pipex *data, int *p_fd)
 {
 	pid_t	pid;
-	int	error;
-	int	fd;
+	int		error;
+	int		fd;
 
 	pid = fork();
 	if (pid < 0)
@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_pipex	data;
 	pid_t	pid;
-	int	p_fd[2];
+	int		p_fd[2];
 
 	if (ac != 5)
 		error_handler(NULL, 4, 1);
