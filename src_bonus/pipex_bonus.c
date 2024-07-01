@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/28 10:15:02 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:14:46 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,53 @@ static void	middle_child(int *old_fd, t_pipex *data, int cmd_num)
 	if (pid == 0)
 	{
 		close(new_fd[0]);
-		dup2(old_fd[0], 0);
-		dup2(new_fd[1], 1);
+		my_dup2(old_fd[0], 0, new_fd[1], 1);
 		exec(data->av[cmd_num], data->envp);
 	}
 	close(new_fd[1]);
 	waitpid(pid, NULL, 0);
+	close(old_fd[0]);
 	if (cmd_num < data->ac - 3)
 		middle_child(new_fd, data, cmd_num + 1);
 	else
 		last_child_fork(data, new_fd);
+}
+
+static void	here_doc_reading(t_pipex *data, int *p_fd)
+{
+	char	*hd_text;
+
+	while (1)
+	{
+		hd_text = get_next_line(0);
+		if (ft_strncmp(hd_text, data->av[2], ft_strlen(data->av[2])) == 0)
+		{
+			free(hd_text);
+			close (p_fd[1]);
+			exit (1);
+		}
+		ft_putstr_fd(hd_text, p_fd[1]);
+		free(hd_text);
+	}
+}
+
+static void	here_doc_func(t_pipex *data, int *p_fd)
+{
+	pid_t	pid;
+
+	if (pipe(p_fd) == -1)
+		error_handler(NULL, 5, 1);
+	pid = fork();
+	if (pid < 0)
+		error_handler(NULL, 6, 1);
+	if (pid == 0)
+	{
+		close(p_fd[0]);
+		here_doc_reading(data, p_fd);
+	}
+	close(p_fd[1]);
+	waitpid(pid, NULL, 0);
+	middle_child(p_fd, data, 3);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -62,6 +99,12 @@ int	main(int ac, char **av, char **envp)
 	if (ac < 5)
 		error_handler(NULL, 4, 1);
 	initilize_data(av, envp, ac, &data);
+	if (ft_strncmp("here_doc", av[1], 9) == 0)
+	{
+		if (ac < 6)
+			error_handler(NULL, 4, 1);
+		here_doc_func(&data, p_fd);
+	}
 	if (pipe(p_fd) == -1)
 		error_handler(NULL, 5, 1);
 	pid = fork();
@@ -70,10 +113,10 @@ int	main(int ac, char **av, char **envp)
 	if (pid == 0)
 		child_process(p_fd, &data);
 	close(p_fd[1]);
+	waitpid(pid, NULL, 0);
 	if (ac - 3 > 2)
 		middle_child(p_fd, &data, 3);
-	else
-		last_child_fork(&data, p_fd);
+	last_child_fork(&data, p_fd);
 }
 
 //line 65: create a pipe for the first process 

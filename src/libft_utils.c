@@ -6,7 +6,7 @@
 /*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:38 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/28 12:12:48 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:41:26 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_strchr(char *str, int c)
 	int	i;
 
 	i = 0;
-	if(!str)
+	if (!str)
 		return (0);
 	while (str[i])
 	{
@@ -71,20 +71,6 @@ char	*ft_strchr(char *str, int c)
 		return ((char *)&str[i]);
 	return (0);
 }
-
-/*int	ft_strchr(char *str, int c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == (char)c)
-			return (1);
-		i++;
-	}
-	return (0);
-}*/
 
 int	ft_strlen(char *str)
 {

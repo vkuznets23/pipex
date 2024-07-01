@@ -6,7 +6,7 @@
 /*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:25 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/27 10:10:28 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:45:55 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,7 @@ void	ft_putchar_fd(char c, int fd)
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
 	if (!s)
 		return ;
-	i = 0;
-	while (s[i])
-	{
-		ft_putchar_fd (s[i], fd);
-		i++;
-	}
-}
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		ft_putchar_fd (s[i], fd);
-		i++;
-	}
-	ft_putchar_fd ('\n', fd);
+	write(fd, s, ft_strlen(s));
 }

@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/28 10:11:57 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:13:14 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	ft_second_fork(t_pipex *data, int *p_fd)
 		close(p_fd[1]);
 		exec(data->av[3], data->envp);
 	}
-	waitpid(pid, &error, 0);
 	close(p_fd[0]);
+	waitpid(pid, &error, 0);
 	error = (error & 0xff00) >> 8;
 	exit(error);
 }
@@ -71,5 +71,6 @@ int	main(int ac, char **av, char **envp)
 	if (pid == 0)
 		child_process(p_fd, &data);
 	close(p_fd[1]);
+	waitpid(pid, NULL, 0);
 	ft_second_fork(&data, p_fd);
 }

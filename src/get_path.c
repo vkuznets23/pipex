@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:08 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/28 12:06:51 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:40:26 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_path(char **cmd, char **envp)
 	char	**all_paths;
 	char	*path_to_cmd;
 
-	if (ft_strchr(cmd[0], '/') != 0)//changes in strchr function
+	if (ft_strchr(cmd[0], '/') != 0)
 	{
 		access_rights(cmd);
 		return (cmd[0]);
