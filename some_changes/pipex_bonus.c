@@ -12,7 +12,7 @@
 
 #include "../pipex.h"
 
-static void	middle_child(int *old_fd, t_pipex *data, int cmd_num, pid_t *pid)
+void	middle_child(int *old_fd, t_pipex *data, int cmd_num, pid_t *pid)
 {
 	int		new_fd[2];
 
@@ -59,17 +59,27 @@ int	main(int ac, char **av, char **envp)
 	initilize_data(av, envp, ac, &data);
 	num_cmd = number_of_cmds(&data);
 	pid = malloc(num_cmd * sizeof(pid_t));
+	i = 1;
 	if (!pid)
         error_handler("malloc failed", 1, 1);
-	if (pipe(p_fd) == -1)
-		error_handler(NULL, 5, 1);
-	first_child_fork(&data, p_fd, &pid[0]);
-	i = 1;
+	if (ft_strncmp("here_doc", av[1], 9) == 0)
+	{
+		if (ac < 6)
+			error_handler(NULL, 1, 1);
+		here_doc_func(&data, p_fd, &pid[i]);
+		i++;
+	}
+	else
+	{
+		if (pipe(p_fd) == -1)
+			error_handler(NULL, 5, 1);
+		first_child_fork(&data, p_fd, &pid[0]);
+	}
 	if (num_cmd > 2)
 	{
 			while(i < num_cmd - 2)
 			{
-				middle_child(p_fd, &data, i + 2, &pid[i]);
+				middle_child(p_fd, &data, i + 3, &pid[i]);
 				i++;
 			}
 	}
