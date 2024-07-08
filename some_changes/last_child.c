@@ -16,7 +16,7 @@ static void	last_child(int *p_fd, t_pipex *data)
 {
 	int	fd;
 
-	fd = open(data->av[data->ac - 1], O_CREAT | O_RDWR | O_APPEND, 0644);
+	fd = open(data->av[data->ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (access(data->av[data->ac - 1], W_OK) == -1)
 		error_handler(data->av[data->ac - 1], 2, 1);
 	if (fd == -1)

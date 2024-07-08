@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../pipex.h"
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE 1000
 
 static char	*free_and_return(char *str, char *ret_val)
 {

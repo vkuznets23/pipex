@@ -19,7 +19,6 @@ static void	here_doc_reading(t_pipex *data, int *p_fd)
 		ft_putstr_fd(hd_text, p_fd[1]);
 		free(hd_text);
 	}
-	free(stop_word);
 }
 
 void	here_doc_func(t_pipex *data, int *p_fd, pid_t *pid)
@@ -35,5 +34,4 @@ void	here_doc_func(t_pipex *data, int *p_fd, pid_t *pid)
 		here_doc_reading(data, p_fd);
 	}
 	close(p_fd[1]);
-	middle_child(p_fd, data, 3, &pid[0]);
 }
