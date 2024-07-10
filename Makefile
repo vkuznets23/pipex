@@ -26,9 +26,11 @@ SRCS = 	pipex.c \
 	$(SRCS_PATH)/ft_split.c 
 
 B_SRCS = $(B_SRCS_PATH)/pipex_bonus.c \
-	 $(B_SRCS_PATH)/bonus_utils.c \
+	 $(B_SRCS_PATH)/utils_bonus.c \
 	$(B_SRCS_PATH)/get_next_line.c \
-	$(B_SRCS_PATH)/last_child.c \
+	$(B_SRCS_PATH)/child_bonus.c \
+	$(B_SRCS_PATH)/middle_bonus.c \
+	$(B_SRCS_PATH)/last_bonus.c \
 	$(SRCS_PATH)/exec_utils.c \
 	$(SRCS_PATH)/printing_utils.c\
 	$(SRCS_PATH)/libft_utils.c \

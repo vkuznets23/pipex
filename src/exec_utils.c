@@ -17,6 +17,7 @@ void	initilize_data(char **av, char **envp, int ac, t_pipex *data)
 	data->av = av;
 	data->envp = envp;
 	data->ac = ac;
+	data->i = 0;
 }
 
 void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to)

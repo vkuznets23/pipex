@@ -25,14 +25,23 @@ typedef struct s_pipex
 	char	**av;
 	char	**envp;
 	int		ac;
+	int	i;
 }	t_pipex;
 void	initilize_data(char **av, char **envp, int ac, t_pipex *data);
 void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to);
 void	exec(char *cmd, char **envp);
 
-//last_child
-void	last_child(int *p_fd, t_pipex *data);
-void	last_child_fork(t_pipex *data, int *p_fd);
+//last
+void	last_child_fork(t_pipex *data, int *p_fd, pid_t *pid);
+
+//middle
+void	middle_child(int *old_fd, t_pipex *data, int cmd_num, pid_t *pid);
+
+//child
+void	child_process( t_pipex *data, int *p_fd, pid_t *pid);
+
+//here_doc
+
 
 //error_handler.c
 void	error_options(int error);
@@ -57,6 +66,7 @@ char	*get_next_line(int fd);
 
 //bonus_utils.c
 char	*ft_my_strjoin(char *str, char *buffer);
-//void	my_dup_bonus(int *old_fd, int *new_fd);
+
+
 
 #endif

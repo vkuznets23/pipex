@@ -12,58 +12,20 @@
 
 #include "../pipex.h"
 
-static void	child_process(int *p_fd, t_pipex *data)
-{
-	int	fd;
-
-	if (access(data->av[1], F_OK) == -1)
-		error_handler(data->av[1], 1, 1);
-	if (access(data->av[1], R_OK) == -1)
-		error_handler(data->av[1], 2, 1);
-	fd = open(data->av[1], O_RDONLY);
-	if (fd == -1)
-		error_handler(data->av[1], 2, 1);
-	my_dup2(fd, 0, p_fd[1], 1);
-	close(p_fd[0]);
-	exec(data->av[2], data->envp);
-}
-
-static void	middle_child(int *old_fd, t_pipex *data, int cmd_num)
-{
-	pid_t	pid;
-	int		new_fd[2];
-
-	if (pipe(new_fd) == -1)
-		error_handler(NULL, 5, 1);
-	pid = fork();
-	if (pid < 0)
-		error_handler(NULL, 6, 1);
-	if (pid == 0)
-	{
-		close(new_fd[0]);
-		my_dup2(old_fd[0], 0, new_fd[1], 1);
-		exec(data->av[cmd_num], data->envp);
-	}
-	close(new_fd[1]);
-	waitpid(pid, NULL, 0);
-	close(old_fd[0]);
-	if (cmd_num < data->ac - 3)
-		middle_child(new_fd, data, cmd_num + 1);
-	else
-		last_child_fork(data, new_fd);
-}
-
 static void	here_doc_reading(t_pipex *data, int *p_fd)
 {
 	char	*hd_text;
+	char	*stop_word;
 
+	stop_word = ft_strjoin(data->av[2], "\n");
 	while (1)
 	{
 		hd_text = get_next_line(0);
-		if (ft_strncmp(hd_text, data->av[2], ft_strlen(data->av[2])) == 0)
+		if (ft_strncmp(hd_text, stop_word, ft_strlen(stop_word)) == 0)		
 		{
 			free(hd_text);
-			close (p_fd[1]);
+			free(stop_word);
+			close (p_fd[0]);
 			exit (1);
 		}
 		ft_putstr_fd(hd_text, p_fd[1]);
@@ -71,53 +33,76 @@ static void	here_doc_reading(t_pipex *data, int *p_fd)
 	}
 }
 
-static void	here_doc_func(t_pipex *data, int *p_fd)
+static void	here_doc_func(t_pipex *data, int *p_fd, pid_t *pid)
 {
-	pid_t	pid;
-
 	if (pipe(p_fd) == -1)
 		error_handler(NULL, 5, 1);
-	pid = fork();
-	if (pid < 0)
+	pid[data->i] = fork();
+	if (pid[data->i] < 0)
 		error_handler(NULL, 6, 1);
-	if (pid == 0)
+	if (pid[data->i] == 0)
 	{
 		close(p_fd[0]);
 		here_doc_reading(data, p_fd);
 	}
+	waitpid(pid[data->i], NULL, 0);
 	close(p_fd[1]);
-	waitpid(pid, NULL, 0);
-	middle_child(p_fd, data, 3);
+
+}
+
+int	ft_cmd_nums(t_pipex *data)
+{
+	int	num_cmd;
+
+	if (ft_strncmp("here_doc", data->av[1], 9) == 0)
+		num_cmd = data->ac - 4;
+	else
+		num_cmd = data->ac - 3;
+	return (num_cmd);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	pid_t	pid;
+	pid_t	*pid;
 	t_pipex	data;
 	int		p_fd[2];
+	int		num_cmd;
+	int		error;
+	int		j;
 
 	if (ac < 5)
 		error_handler(NULL, 4, 1);
 	initilize_data(av, envp, ac, &data);
+	num_cmd = ft_cmd_nums(&data);
+	pid = malloc(num_cmd * sizeof(pid_t));
+	if (!pid)
+		error_handler("malloc failure", 4, 1);
+	if (pipe(p_fd) == -1)
+	{
+		free(pid);
+		error_handler(NULL, 5, 1);
+	}
 	if (ft_strncmp("here_doc", av[1], 9) == 0)
 	{
 		if (ac < 6)
+		{
+			free(pid);
 			error_handler(NULL, 4, 1);
-		here_doc_func(&data, p_fd);
+		}
+		here_doc_func(&data, p_fd, pid);
 	}
-	if (pipe(p_fd) == -1)
-		error_handler(NULL, 5, 1);
-	pid = fork();
-	if (pid < 0)
-		error_handler(NULL, 6, 1);
-	if (pid == 0)
-		child_process(p_fd, &data);
-	close(p_fd[1]);
-	waitpid(pid, NULL, 0);
+	else
+		child_process(&data, p_fd, pid);
+	data.i++;
 	if (ac - 3 > 2)
-		middle_child(p_fd, &data, 3);
-	last_child_fork(&data, p_fd);
+		middle_child(p_fd, &data, 3, pid);
+	else
+		last_child_fork(&data, p_fd, pid);
+	j = 0;
+	while (j <= data.i)
+	{
+		waitpid(pid[j], &error, 0);
+		j++;
+	}
+	exit(WEXITSTATUS(error));
 }
-
-//line 65: create a pipe for the first process 
-//line 67: fork for the first child process
