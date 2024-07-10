@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:35 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/07/01 16:12:29 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:34:49 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_pipex
 	char	**av;
 	char	**envp;
 	int		ac;
-	int	i;
+	int		i;
 }	t_pipex;
 void	initilize_data(char **av, char **envp, int ac, t_pipex *data);
 void	my_dup2(int fd_from, int fd_to, int p_fd_from, int p_fd_to);
@@ -38,10 +38,10 @@ void	last_child_fork(t_pipex *data, int *p_fd, pid_t *pid);
 void	middle_child(int *old_fd, t_pipex *data, int cmd_num, pid_t *pid);
 
 //child
-void	child_process( t_pipex *data, int *p_fd, pid_t *pid);
+void	child_process(t_pipex *data, int *p_fd, pid_t *pid);
 
 //here_doc
-
+void	here_doc_func(t_pipex *data, int *p_fd, pid_t *pid);
 
 //error_handler.c
 void	error_options(int error);
@@ -66,7 +66,9 @@ char	*get_next_line(int fd);
 
 //bonus_utils.c
 char	*ft_my_strjoin(char *str, char *buffer);
-
-
+void	ft_piping(int *p_fd, pid_t *pid);
+pid_t	*ft_malloc_cmds(t_pipex *data);
+void	ft_here_doc(t_pipex *data, int *p_fd, pid_t *pid);
+int		ft_cmd_nums(t_pipex *data);
 
 #endif

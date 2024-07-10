@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:29:05 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/06/28 11:13:10 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:23:31 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	error_options(int error)
 		ft_putstr_fd("fork failure", 2);
 	else if (error == 7)
 		ft_putstr_fd("dup2 failure", 2);
+	else if (error == 8)
+		ft_putstr_fd("malloc failure", 2);
 }
 
 void	error_handler(char *cmd, int error, int exit_status)

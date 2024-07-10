@@ -6,7 +6,7 @@
 #    By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/27 09:44:34 by vkuznets          #+#    #+#              #
-#    Updated: 2024/07/01 15:22:36 by vkuznets         ###   ########.fr        #
+#    Updated: 2024/07/10 15:40:54 by vkuznets         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Werror -Wall -Wextra
 SRCS_PATH = src
 B_SRCS_PATH = src_bonus
 
-SRCS = 	pipex.c \
+SRCS = 	$(SRCS_PATH)/pipex.c \
 	$(SRCS_PATH)/exec_utils.c \
 	$(SRCS_PATH)/printing_utils.c\
 	$(SRCS_PATH)/libft_utils.c \
@@ -31,6 +31,7 @@ B_SRCS = $(B_SRCS_PATH)/pipex_bonus.c \
 	$(B_SRCS_PATH)/child_bonus.c \
 	$(B_SRCS_PATH)/middle_bonus.c \
 	$(B_SRCS_PATH)/last_bonus.c \
+	$(B_SRCS_PATH)/here_doc_bonus.c \
 	$(SRCS_PATH)/exec_utils.c \
 	$(SRCS_PATH)/printing_utils.c\
 	$(SRCS_PATH)/libft_utils.c \
