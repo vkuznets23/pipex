@@ -51,22 +51,22 @@ The program is using the following syntax:
 - `file2`: The output file to write the final result
 
 ## Usage examples
-### Command
+#### Command 1
 ``` bash
 ./pipex infile "ls -l" "wc -l" outfile
 ```
 
-### Shell Equivalent
+#### Shell Equivalent
 ``` bash
 < infile ls -l | wc -l > outfile
 ```
 
-### Command
+#### Command 2
 ``` bash
 ./pipex infile "grep a1" "wc -w" outfile
 ```
 
-### Shell Equivalent
+#### Shell Equivalent
 ``` bash
 < infile grep a1 | wc -w > outfile
 ```
