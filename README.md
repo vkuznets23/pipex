@@ -1,5 +1,4 @@
 # Pipex
-## Overview
 The pipex project is a recreation of the Unix shell pipeline (|) functionality in C. It takes two commands and connects them using a pipe, allowing the output of the first command to serve as the input for the second. The program replicates the following shell behavior:
 
 **Authorized Functions**: 
