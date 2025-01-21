@@ -3,7 +3,7 @@ The pipex project is a recreation of the Unix shell pipeline (|) functionality i
 
 **Authorized Functions**: 
 `open`, `close`, `read`, `write`, `malloc`, `free`, `perror`, `strerror`, `access`, `dup`, `dup2`, `execve`, `exit`, `fork`, `pipe`, `unlink`, `wait`, `waitpid`
-Any equivalent functions coded by you (e.g., `ft_printf`)
+`ft_printf`(reimplementation of `printf`)
 
 ## Table of contents
 - [How it works](#how-it-works)
