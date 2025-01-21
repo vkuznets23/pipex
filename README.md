@@ -6,6 +6,12 @@ The pipex project is a recreation of the Unix shell pipeline (|) functionality i
 Any equivalent functions coded by you (e.g., `ft_printf`)
 
 ## Table of contents
+- [How it works](#how-it-works)
+- [Limitation](#limitation)
+- [Getting started](#getting-started)
+- [Execution](#execution)
+- [Usage examples](#usage-examples)
+- [Contribution](#contribution)
 
 ## How It Works
 **Process Creation:**
