@@ -20,13 +20,13 @@ Any equivalent functions coded by you (e.g., `ft_printf`)
 - The second child process executes cmd2, redirecting input from the pipe and output to file2.
 
 **Piping:**
-- The pipe() system call creates a unidirectional data channel between cmd1 and cmd2.
+The pipe() system call creates a unidirectional data channel between cmd1 and cmd2.
 
 **File Redirection:**
-- Input redirection is achieved using dup2() to replace standard input/output with file descriptors.
+Input redirection is achieved using dup2() to replace standard input/output with file descriptors.
 
 **Command Execution:**
-- The execve() function is used to replace the child processes with the specified commands.
+The execve() function is used to replace the child processes with the specified commands.
 
 ## Limitation
 - Commands must be provided with their full paths if they are not in the PATH environment variable.
