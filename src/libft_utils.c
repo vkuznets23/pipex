@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:38 by vkuznets          #+#    #+#             */
 /*   Updated: 2024/07/01 13:41:26 by vkuznets         ###   ########.fr       */
@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	string = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-	d = (char *)malloc(sizeof(char) * string + 1);
+	d = (char *)malloc(sizeof(char) * (string + 1));
 	if (!d)
 		return (0);
 	while (s1[i])

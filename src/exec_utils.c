@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:10:13 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/07/10 16:24:58 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:17:00 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	space_checker(char *cmd)
 
 	len = ft_strlen(cmd);
 	if (cmd[0] == '\0')
-		error_handler(cmd, 2, 126);
+		error_handler(cmd, 3, 126);
 	if (cmd[0] == ' ' || (cmd[0] >= 9 && cmd[0] <= 13))
 		error_handler(cmd, 3, 127);
 	if (cmd[len -1] == ' ' || (cmd[len - 1] >= 9 && cmd[len - 1] <= 13))

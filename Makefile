@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vkuznets <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/27 09:44:34 by vkuznets          #+#    #+#              #
-#    Updated: 2024/07/10 15:40:54 by vkuznets         ###   ########.fr        #
+#    Updated: 2024/07/11 14:58:59 by vkuznets         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,11 @@ SRCS = 	$(SRCS_PATH)/pipex.c \
 
 OBJS = $(SRCS:.c=.o)
 
-all : $(NAME)
+all : mandatory
 
-$(NAME) : $(OBJS)
+mandatory : .mandatory
+
+.mandatory : $(OBJS)
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJS)
 	@touch .mandatory
 
@@ -36,7 +38,7 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJS) $(B_OBJS)
+	rm -f $(OBJS)
 	@rm -f .mandatory
 
 fclean: clean

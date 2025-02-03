@@ -6,7 +6,7 @@
 /*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:06:23 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/07/10 15:40:39 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:51:12 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,24 @@ static void	ft_child_process(int *p_fd, t_pipex *data)
 	int	fd;
 
 	if (access(data->av[1], F_OK) == -1)
+	{
+		close(p_fd[0]);
+		close(p_fd[1]);
 		error_handler(data->av[1], 1, 1);
+	}
 	if (access(data->av[1], R_OK) == -1)
+	{
+		close(p_fd[0]);
+		close(p_fd[1]);
 		error_handler(data->av[1], 2, 1);
+	}
 	fd = open(data->av[1], O_RDONLY);
 	if (fd == -1)
+	{
+		close(p_fd[0]);
+		close(p_fd[1]);
 		error_handler(data->av[1], 2, 1);
+	}
 	my_dup2(fd, 0, p_fd[1], 1);
 	close(p_fd[0]);
 	exec(data->av[2], data->envp);
@@ -39,9 +51,17 @@ static void	ft_second_fork(t_pipex *data, int *p_fd, pid_t *pid)
 	{
 		fd = open(data->av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (access(data->av[4], W_OK) == -1)
+		{
+			close(p_fd[0]);
+			close(p_fd[1]);
 			error_handler(data->av[4], 2, 1);
+		}
 		if (fd == -1)
+		{
+			close(p_fd[0]);
+			close(p_fd[1]);
 			error_handler(data->av[4], 1, 1);
+		}
 		my_dup2(fd, 1, p_fd[0], 0);
 		close(p_fd[1]);
 		exec(data->av[3], data->envp);
